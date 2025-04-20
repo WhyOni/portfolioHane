@@ -11,7 +11,7 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
-  0.1,
+  0.01,
   1000
 );
 
@@ -24,7 +24,6 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
 camera.position.z = 2;
-camera.position.y = 0.3;
 
 const ambientLight = new THREE.AmbientLight(0xffffff);
 ambientLight.intensity = 0.5;
@@ -48,6 +47,7 @@ loader.load(
   function (gltf) {
     hane = gltf.scene;
     scene.add(gltf.scene);
+    gltf.scene.position.y = -0.3;
   },
   undefined,
   function (error) {
@@ -73,7 +73,45 @@ scene.background = new THREE.Color(0xbdbdbd);
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
   if (hane !== null) {
-    hane.rotation.y = t / 500 + Math.PI;
+    hane.rotation.x = t / 500;
+  }
+  console.log(t);
+  if (t >= -250) {
+    hane.rotation.y = 0;
+    hane.rotation.z = 0;
+    hane.position.x = 0;
+    hane.position.z = 0;
+    hane.position.y = 0;
+  } else if (t >= -400) {
+    hane.rotation.y = 2.5;
+    hane.rotation.z = 0;
+    hane.position.x = 1;
+    hane.position.z = 1;
+    hane.position.y = 0;
+  } else if (t >= -600) {
+    hane.rotation.y = -2.5;
+    hane.rotation.z = 1;
+    hane.position.x = -1;
+    hane.position.z = -1;
+    hane.position.y = 0;
+  } else if (t >= -800) {
+    hane.rotation.y = Math.PI;
+    hane.rotation.z = Math.PI / 2;
+    hane.position.x = 0;
+    hane.position.z = 0;
+    hane.position.y = 0;
+  } else if (t >= -1100) {
+    hane.rotation.y = Math.PI;
+    hane.rotation.z = 4;
+    hane.position.x = 0;
+    hane.position.z = -1;
+    hane.position.y = 1;
+  } else {
+    hane.rotation.y = 1.37;
+    hane.rotation.z = Math.PI;
+    hane.position.x = -0.1;
+    hane.position.z = 0.65;
+    hane.position.y = 0;
   }
 }
 

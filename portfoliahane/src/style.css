@@ -11,5 +11,7 @@ main {
   margin: 0;
 }
 p {
-  width: 100px;
+  color: white;
+  width: 400px;
+  margin-bottom: 20px;
 }
