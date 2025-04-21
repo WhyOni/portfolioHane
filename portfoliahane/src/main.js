@@ -4,7 +4,6 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPixelatedPass } from "three/addons/postprocessing/RenderPixelatedPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const scene = new THREE.Scene();
 
@@ -34,26 +33,8 @@ directionalLight.intensity = 1;
 directionalLight.position.set(0, 3, 6);
 scene.add(directionalLight);
 
-const lightHelper = new THREE.DirectionalLightHelper(directionalLight);
-scene.add(lightHelper);
-
-const controls = new OrbitControls(camera, renderer.domElement);
-
 const loader = new GLTFLoader();
 let hane = null;
-
-loader.load(
-  "HANE.gltf",
-  function (gltf) {
-    hane = gltf.scene;
-    scene.add(gltf.scene);
-    gltf.scene.position.y = -0.3;
-  },
-  undefined,
-  function (error) {
-    console.error(error);
-  }
-);
 
 const composer = new EffectComposer(renderer);
 
@@ -70,60 +51,57 @@ composer.setSize(window.innerWidth, window.innerHeight);
 
 scene.background = new THREE.Color(0xbdbdbd);
 
-function moveCamera() {
-  const t = document.body.getBoundingClientRect().top;
-  if (hane !== null) {
-    hane.rotation.x = t / 500;
+loader.load(
+  "HANE.gltf",
+  function (han) {
+    hane = han;
+    scene.add(han.scene);
+    han.scene.position.y = -0.7;
+    han.scene.rotation.y = (3 * Math.PI) / 4;
+    han.scene.position.x = 1;
+    han.scene.position.z = 1;
+
+    const clock = new THREE.Clock();
+    const mixer = new THREE.AnimationMixer(han.scene);
+    var wave = mixer.clipAction(han.animations[0]);
+    wave.setLoop(THREE.LoopOnce);
+    wave.clampWhenFinished = true;
+    wave.play();
+
+    scene.add(han.scene);
+
+    function animate() {
+      const delta = clock.getDelta();
+      if (mixer) mixer.update(delta);
+      renderer.render(scene, camera);
+      composer.render();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    document.getElementById("wavebutton").onclick = () => {
+      wave.stop();
+      wave.play();
+    };
+
+    function moveCamera() {
+      const t = document.body.getBoundingClientRect().top;
+    }
+
+    document.body.onscroll = moveCamera;
+  },
+  undefined,
+  function (error) {
+    console.error(error);
   }
-  console.log(t);
-  if (t >= -250) {
-    hane.rotation.y = 0;
-    hane.rotation.z = 0;
-    hane.position.x = 0;
-    hane.position.z = 0;
-    hane.position.y = 0;
-  } else if (t >= -400) {
-    hane.rotation.y = 2.5;
-    hane.rotation.z = 0;
-    hane.position.x = 1;
-    hane.position.z = 1;
-    hane.position.y = 0;
-  } else if (t >= -600) {
-    hane.rotation.y = -2.5;
-    hane.rotation.z = 1;
-    hane.position.x = -1;
-    hane.position.z = -1;
-    hane.position.y = 0;
-  } else if (t >= -800) {
-    hane.rotation.y = Math.PI;
-    hane.rotation.z = Math.PI / 2;
-    hane.position.x = 0;
-    hane.position.z = 0;
-    hane.position.y = 0;
-  } else if (t >= -1100) {
-    hane.rotation.y = Math.PI;
-    hane.rotation.z = 4;
-    hane.position.x = 0;
-    hane.position.z = -1;
-    hane.position.y = 1;
-  } else {
-    hane.rotation.y = 1.37;
-    hane.rotation.z = Math.PI;
-    hane.position.x = -0.1;
-    hane.position.z = 0.65;
-    hane.position.y = 0;
-  }
-}
+);
 
-document.body.onscroll = moveCamera;
+// function animate() {
+//   //   if (hane !== null) {
+//   //     hane.scene.rotation.y += 0.01;
+//   //   }
+//   renderer.render(scene, camera);
+//   composer.render();
+// }
 
-function animate() {
-  //   if (hane !== null) {
-  //     hane.rotation.y += 0.01;
-  //   }
-  controls.update();
-  renderer.render(scene, camera);
-  composer.render();
-}
-
-renderer.setAnimationLoop(animate);
+// renderer.setAnimationLoop(animate);

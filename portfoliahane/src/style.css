@@ -1,17 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Jersey+10&display=swap");
+
 canvas {
   position: fixed;
   top: 0;
   left: 0;
 }
-main {
-  position: absolute;
-}
 
 * {
   margin: 0;
 }
-p {
+
+.header {
+  position: fixed;
+  height: 50px;
+  width: 100vw;
+  background-color: #bdbdbd;
+  box-shadow: -2px -2px #e0dede, -2px 0 #e0dede, 0 -2px #e0dede, -4px -4px white,
+    -4px 0 white, 0 -4px white, 2px 2px #818181, 0 2px #818181, 2px 0 #818181,
+    2px -2px #e0dede, -2px 2px #818181, -4px 2px white, -4px 4px black,
+    4px 4px black, 4px 0 black, 0 4px black, 2px -4px white, 4px -4px black;
+}
+
+button {
+  border: 0;
+  background-color: #bdbdbd;
+  box-shadow: -2px -2px #e0dede, -2px 0 #e0dede, 0 -2px #e0dede, -4px -4px white,
+    -4px 0 white, 0 -4px white, 2px 2px #818181, 0 2px #818181, 2px 0 #818181,
+    2px -2px #e0dede, -2px 2px #818181, -4px 2px white, -4px 4px black,
+    4px 4px black, 4px 0 black, 0 4px black, 2px -4px white, 4px -4px black;
+}
+button:hover {
+  box-shadow: -2px #818181, -2px 0 #818181, 0 -2px #818181, -4px -4px black,
+    -4px 0 black, 0 -4px black, 2px 2px #e0dede, 0 2px #e0dede, 2px 0 #e0dede,
+    2px -2px #818181, -2px 2px #e0dede, -4px 2px black, -4px 4px white,
+    4px 4px white, 4px 0 white, 0 4px white, 2px -4px black, 4px -4px white;
+}
+
+main {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
   color: white;
-  width: 400px;
-  margin-bottom: 20px;
+  padding-top: 100px;
+  width: 100vw;
+  font-family: "Jersey 10", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.title {
+  font-size: 100px;
+  grid-column: 1/13;
+  display: flex;
+  justify-content: center;
+}
+.titlegif {
+  height: 7rem;
+}
+.gif1 {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.subtitle {
+  font-size: xx-small;
+  grid-column: 1/13;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+.wvbt {
+  grid-column: 1/13;
+  display: flex;
+  justify-content: center;
 }
