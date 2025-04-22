@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Jersey+10&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tiny5&display=swap");
 
 canvas {
   position: fixed;
@@ -22,15 +23,20 @@ canvas {
 }
 
 button {
+  font-family: "Tiny5", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: larger;
   border: 0;
   background-color: #bdbdbd;
+  height: min-content;
   box-shadow: -2px -2px #e0dede, -2px 0 #e0dede, 0 -2px #e0dede, -4px -4px white,
     -4px 0 white, 0 -4px white, 2px 2px #818181, 0 2px #818181, 2px 0 #818181,
     2px -2px #e0dede, -2px 2px #818181, -4px 2px white, -4px 4px black,
     4px 4px black, 4px 0 black, 0 4px black, 2px -4px white, 4px -4px black;
 }
-button:hover {
-  box-shadow: -2px #818181, -2px 0 #818181, 0 -2px #818181, -4px -4px black,
+button:active {
+  box-shadow: -2px -2px #818181, -2px 0 #818181, 0 -2px #818181, -4px -4px black,
     -4px 0 black, 0 -4px black, 2px 2px #e0dede, 0 2px #e0dede, 2px 0 #e0dede,
     2px -2px #818181, -2px 2px #e0dede, -4px 2px black, -4px 4px white,
     4px 4px white, 4px 0 white, 0 4px white, 2px -4px black, 4px -4px white;
@@ -38,22 +44,72 @@ button:hover {
 
 main {
   position: absolute;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
   color: white;
-  padding-top: 100px;
   width: 100vw;
   font-family: "Jersey 10", sans-serif;
   font-weight: 400;
   font-style: normal;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+section {
+  height: 100vh;
+}
+
+.sec1 {
+  grid-column: 1/13;
 }
 
 .title {
   font-size: 100px;
-  grid-column: 1/13;
+  width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: 100px;
 }
+
+.rainbow {
+  animation: infinite 3s;
+  animation-name: rainbow;
+}
+
+@keyframes rainbow {
+  0% {
+    color: hsl(0, 100%, 50%);
+  }
+  10% {
+    color: hsl(36, 100%, 50%);
+  }
+  20% {
+    color: hsl(62, 100%, 50%);
+  }
+  30% {
+    color: hsl(98, 100%, 50%);
+  }
+  40% {
+    color: hsl(134, 100%, 50%);
+  }
+  50% {
+    color: hsl(180, 100%, 50%);
+  }
+  60% {
+    color: hsl(216, 100%, 50%);
+  }
+  70% {
+    color: hsl(252, 100%, 50%);
+  }
+  80% {
+    color: hsl(288, 100%, 50%);
+  }
+  90% {
+    color: hsl(324, 100%, 50%);
+  }
+  100% {
+    color: hsl(360, 100%, 50%);
+  }
+}
+
 .titlegif {
   height: 7rem;
 }
@@ -63,13 +119,42 @@ main {
 }
 .subtitle {
   font-size: xx-small;
-  grid-column: 1/13;
+  width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 50px;
 }
 .wvbt {
-  grid-column: 1/13;
+  width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.sec2 {
+  grid-column: 3/8;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.sec3 {
+  grid-column: 7/11;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.smoltitle {
+  font-size: 50px;
+}
+.desc {
+  font-size: 25px;
+}
+
+.sec4 {
+  grid-column: 1/13;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
