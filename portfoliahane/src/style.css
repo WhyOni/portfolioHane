@@ -6,13 +6,9 @@ canvas {
   top: 0;
   left: 0;
 }
-
-body {
-  cursor: url("cursor.png"), auto;
-}
-
 * {
   margin: 0;
+  cursor: url("cursor.png"), auto;
 }
 
 .header {
@@ -22,6 +18,7 @@ body {
   height: 50px;
   width: 100vw;
   background-color: #bdbdbd;
+  color: white;
   box-shadow: -2px -2px #e0dede, -2px 0 #e0dede, 0 -2px #e0dede, -4px -4px white,
     -4px 0 white, 0 -4px white, 2px 2px #818181, 0 2px #818181, 2px 0 #818181,
     2px -2px #e0dede, -2px 2px #818181, -4px 2px white, -4px 4px black,
@@ -29,7 +26,9 @@ body {
 }
 
 .logo {
-  grid-column: 3/7;
+  grid-column: 3/5;
+  display: flex;
+  align-items: center;
 }
 .headergif {
   height: 50px;
@@ -179,4 +178,8 @@ section {
 
 #gamble {
   margin-top: 20px;
+}
+
+#money {
+  color: #00ff00;
 }

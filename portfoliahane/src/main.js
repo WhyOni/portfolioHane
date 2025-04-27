@@ -175,7 +175,13 @@ document.getElementById("wavebutton").onclick = () => {
   wave.play();
 };
 
+let money = 100;
+const mon = document.getElementById("money");
+const snd = new Audio("confetti.mp3");
+//   const sound = new Audio("fart.mp3");
+
 document.getElementById("gamble").onclick = () => {
+  //   sound.play();
   const one = Math.floor(Math.random() * 5),
     two = Math.floor(Math.random() * 5),
     three = Math.floor(Math.random() * 5);
@@ -194,8 +200,8 @@ document.getElementById("gamble").onclick = () => {
   wheel3[three].play();
   slotlever.play();
   setTimeout(function () {
-    // if (one === two && two === three) {
-    if (true) {
+    if (one === two && two === three) {
+      snd.play();
       confetti({
         particleCount: 100,
         spread: 70,
@@ -211,6 +217,15 @@ document.getElementById("gamble").onclick = () => {
           "#00ffff",
         ],
       });
+      money = money + 10;
+    } else {
+      money = money - 10;
+    }
+    mon.innerText = `$${money}`;
+    if (money > 0) {
+      mon.style.color = "rgb(0,255,0)";
+    } else {
+      mon.style.color = "rgb(255,0,0)";
     }
   }, 3000);
 };
@@ -287,19 +302,35 @@ function moveCamera() {
       lebron.play();
       flowerSpin = true;
     } else {
-      hane.scene.rotation.x = 0;
-      hane.scene.rotation.y = Math.PI;
-      hane.scene.rotation.z = 0;
-      hane.scene.position.x = 0;
-      hane.scene.position.y = 0.5;
-      hane.scene.position.z = -1;
-      flower.scene.position.x = 2.7;
-      flower.scene.position.y = -1;
-      flower.scene.position.z = -2;
-      slot.scene.rotation.y = Math.PI;
-      slot.scene.position.x = -1;
-      slot.scene.position.y = -1;
-      slot.scene.position.z = 0;
+      if (window.innerWidth / window.innerHeight >= 85 / 70) {
+        hane.scene.rotation.x = 0;
+        hane.scene.rotation.y = Math.PI;
+        hane.scene.rotation.z = 0;
+        hane.scene.position.x = 0;
+        hane.scene.position.y = 0.5;
+        hane.scene.position.z = -1;
+        flower.scene.position.x = 2.7;
+        flower.scene.position.y = -1;
+        flower.scene.position.z = -2;
+        slot.scene.rotation.y = Math.PI;
+        slot.scene.position.x = -1;
+        slot.scene.position.y = -1;
+        slot.scene.position.z = 0;
+      } else {
+        hane.scene.rotation.x = 0;
+        hane.scene.rotation.y = Math.PI;
+        hane.scene.rotation.z = 0;
+        hane.scene.position.x = 0;
+        hane.scene.position.y = 0.5;
+        hane.scene.position.z = -1;
+        flower.scene.position.x = 0.7;
+        flower.scene.position.y = -1;
+        flower.scene.position.z = -2;
+        slot.scene.rotation.y = Math.PI;
+        slot.scene.position.x = 0;
+        slot.scene.position.y = -1;
+        slot.scene.position.z = 0;
+      }
       lebron.stop();
       flowerSpin = false;
     }
