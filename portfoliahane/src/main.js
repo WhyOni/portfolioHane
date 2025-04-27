@@ -104,11 +104,65 @@ loader.load(
   }
 );
 
+let slot = null,
+  mixerslot,
+  wheel1 = [],
+  wheel2 = [],
+  wheel3 = [],
+  slotlever;
+
+loader.load(
+  "slot.gltf",
+  function (han) {
+    slot = han;
+    mixerslot = new THREE.AnimationMixer(slot.scene);
+    wheel1.push(mixerslot.clipAction(slot.animations[0]));
+    wheel1.push(mixerslot.clipAction(slot.animations[1]));
+    wheel1.push(mixerslot.clipAction(slot.animations[2]));
+    wheel1.push(mixerslot.clipAction(slot.animations[3]));
+    wheel1.push(mixerslot.clipAction(slot.animations[4]));
+    wheel2.push(mixerslot.clipAction(slot.animations[5]));
+    wheel2.push(mixerslot.clipAction(slot.animations[6]));
+    wheel2.push(mixerslot.clipAction(slot.animations[7]));
+    wheel2.push(mixerslot.clipAction(slot.animations[8]));
+    wheel2.push(mixerslot.clipAction(slot.animations[9]));
+    wheel3.push(mixerslot.clipAction(slot.animations[10]));
+    wheel3.push(mixerslot.clipAction(slot.animations[11]));
+    wheel3.push(mixerslot.clipAction(slot.animations[12]));
+    wheel3.push(mixerslot.clipAction(slot.animations[13]));
+    wheel3.push(mixerslot.clipAction(slot.animations[14]));
+    slotlever = mixerslot.clipAction(slot.animations[15]);
+    slotlever.setLoop(THREE.LoopOnce);
+    slotlever.clampWhenFinished = true;
+    wheel1.map((a) => {
+      a.setLoop(THREE.LoopOnce);
+      a.clampWhenFinished = true;
+    });
+    wheel2.map((a) => {
+      a.setLoop(THREE.LoopOnce);
+      a.clampWhenFinished = true;
+    });
+    wheel3.map((a) => {
+      a.setLoop(THREE.LoopOnce);
+      a.clampWhenFinished = true;
+    });
+    han.scene.position.z = 3;
+    scene.add(han.scene);
+  },
+  undefined,
+  function (error) {
+    console.error(error);
+  }
+);
+
+let flowerSpin = true;
+
 function animate() {
   if (hane != null) {
     const delta = clock.getDelta();
     if (mixer) mixer.update(delta);
-    flower.scene.rotation.y += 0.01;
+    if (mixerslot) mixerslot.update(delta);
+    if (flowerSpin) flower.scene.rotation.y += 0.01;
   }
   renderer.render(scene, camera);
   composer.render();
@@ -119,6 +173,46 @@ animate();
 document.getElementById("wavebutton").onclick = () => {
   wave.stop();
   wave.play();
+};
+
+document.getElementById("gamble").onclick = () => {
+  const one = Math.floor(Math.random() * 5),
+    two = Math.floor(Math.random() * 5),
+    three = Math.floor(Math.random() * 5);
+  slotlever.stop();
+  wheel1.map((a) => {
+    a.stop();
+  });
+  wheel2.map((a) => {
+    a.stop();
+  });
+  wheel3.map((a) => {
+    a.stop();
+  });
+  wheel1[one].play();
+  wheel2[two].play();
+  wheel3[three].play();
+  slotlever.play();
+  setTimeout(function () {
+    // if (one === two && two === three) {
+    if (true) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: {
+          y: 0.6,
+        },
+        colors: [
+          "#ff00ff",
+          "#00ff00",
+          "#0000ff",
+          "#ff0000",
+          "#ffff00",
+          "#00ffff",
+        ],
+      });
+    }
+  }, 3000);
 };
 
 function moveCamera() {
@@ -169,7 +263,6 @@ function moveCamera() {
       hane.scene.position.z = 0;
       think.stop();
       lebron.stop();
-      console.log("a");
     } else if (t >= (-11 * window.innerHeight) / 2) {
       hane.scene.rotation.x = 0;
       hane.scene.rotation.y = Math.PI;
@@ -180,16 +273,35 @@ function moveCamera() {
       flower.scene.position.z = 3;
       flower.scene.position.y = 0;
       lebron.play();
-    } else {
+    } else if (t >= (-13 * window.innerHeight) / 2) {
       hane.scene.rotation.x = 0;
       hane.scene.rotation.y = Math.PI;
       hane.scene.rotation.z = Math.PI / 2;
       hane.scene.position.x = 0;
       hane.scene.position.y = 0.5;
       hane.scene.position.z = -1;
-      flower.scene.position.z = 0;
+      flower.scene.position.x = 0;
       flower.scene.position.y = -0.8;
+      flower.scene.position.z = 0;
+      slot.scene.position.z = 3;
       lebron.play();
+      flowerSpin = true;
+    } else {
+      hane.scene.rotation.x = 0;
+      hane.scene.rotation.y = Math.PI;
+      hane.scene.rotation.z = 0;
+      hane.scene.position.x = 0;
+      hane.scene.position.y = 0.5;
+      hane.scene.position.z = -1;
+      flower.scene.position.x = 2.7;
+      flower.scene.position.y = -1;
+      flower.scene.position.z = -2;
+      slot.scene.rotation.y = Math.PI;
+      slot.scene.position.x = -1;
+      slot.scene.position.y = -1;
+      slot.scene.position.z = 0;
+      lebron.stop();
+      flowerSpin = false;
     }
   }
 }
